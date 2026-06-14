@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SasyaAI — AI-Powered AgriTech Platform</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green: #2d6a4f;
+    --light-green: #52b788;
+    --pale: #d8f3dc;
+    --dark: #1b1b2f;
+    --text: #333;
+  }
+  body { font-family: 'Segoe UI', sans-serif; color: var(--text); background: #fff; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px); padding: 16px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08); z-index: 100;
+  }
+  .logo { font-size: 1.6rem; font-weight: 800; color: var(--green); }
+  .logo span { color: var(--light-green); }
+  .nav-links a {
+    margin-left: 28px; text-decoration: none; color: var(--text);
+    font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-btn {
+    background: var(--green); color: white !important;
+    padding: 10px 22px; border-radius: 25px; font-weight: 600 !important;
+  }
+  .nav-btn:hover { background: var(--light-green) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #52b788 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 40px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-badge {
+    display: inline-block; background: rgba(255,255,255,0.15);
+    color: white; padding: 8px 20px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600; margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900; color: white;
+    line-height: 1.1; margin-bottom: 20px;
+  }
+  .hero h1 span { color: #b7e4c7; }
+  .hero p {
+    font-size: 1.2rem; color: rgba(255,255,255,0.85);
+    max-width: 600px; margin: 0 auto 40px; line-height: 1.7;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: white; color: var(--green);
+    padding: 16px 36px; border-radius: 50px; font-size: 1rem;
+    font-weight: 700; text-decoration: none; transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .btn-secondary {
+    background: transparent; color: white;
+    padding: 16px 36px; border-radius: 50px; font-size: 1rem;
+    font-weight: 600; text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.5); transition: all 0.3s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+  /* STATS */
+  .stats {
+    background: var(--dark); padding: 60px 40px;
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-number { font-size: 2.8rem; font-weight: 900; color: var(--light-green); }
+  .stat-label { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+  .section-tag {
+    display: inline-block; background: var(--pale);
+    color: var(--green); padding: 6px 16px;
+    border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
+  }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--dark); margin-bottom: 16px; }
+  .section-sub { color: #666; font-size: 1.1rem; max-width: 600px; line-height: 1.7; }
+
+  /* FEATURES */
+  .features { background: #f8fffe; }
+  .features-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px; margin-top: 60px; text-align: left;
+  }
+  .feature-card {
+    background: white; border-radius: 20px; padding: 40px 32px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06); transition: all 0.3s;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 50px rgba(45,106,79,0.15); }
+  .feature-icon {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: var(--pale); display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; margin-bottom: 24px;
+  }
+  .feature-card h3 { font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+  .feature-card p { color: #666; line-height: 1.7; }
+  .feature-tag {
+    display: inline-block; margin-top: 16px;
+    background: var(--pale); color: var(--green);
+    padding: 4px 12px; border-radius: 12px; font-size: 0.78rem; font-weight: 600;
+  }
+
+  /* HOW IT WORKS */
+  .how { max-width: 900px; margin: 0 auto; text-align: center; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-top: 60px; }
+  .step { text-align: center; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--green); color: white;
+    font-size: 1.4rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .step h4 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .step p { color: #666; font-size: 0.9rem; line-height: 1.6; }
+
+  /* TECH STACK */
+  .tech { background: #f8fffe; text-align: center; }
+  .tech-inner { max-width: 900px; margin: 0 auto; }
+  .tech-grid {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 16px; margin-top: 48px;
+  }
+  .tech-badge {
+    background: white; border: 1.5px solid var(--pale);
+    padding: 12px 24px; border-radius: 50px;
+    font-weight: 600; color: var(--green); font-size: 0.95rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, #1b4332, #2d6a4f);
+    text-align: center; color: white;
+  }
+  .cta h2 { color: white; }
+  .cta p { color: rgba(255,255,255,0.8); margin: 16px auto 40px; max-width: 500px; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 32px; font-size: 0.9rem;
+  }
+  footer a { color: var(--light-green); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 20px; }
+    .stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🌿 Sasya<span>AI</span></div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="https://github.com/YOUR_USERNAME/sasyaai" target="_blank">GitHub</a>
+    <a href="https://YOUR_USERNAME-sasyaai.streamlit.app" class="nav-btn" target="_blank">Launch App →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🌱 Open Source AgriTech AI</div>
+    <h1>Smart Farming with <span>Artificial Intelligence</span></h1>
+    <p>Detect crop diseases, get fertilizer advice, and plan your crops based on real-time weather — all powered by Deep Learning and Machine Learning.</p>
+    <div class="hero-buttons">
+      <a href="https://YOUR_USERNAME-sasyaai.streamlit.app" class="btn-primary" target="_blank">🚀 Launch SasyaAI</a>
+      <a href="https://github.com/YOUR_USERNAME/sasyaai" class="btn-secondary" target="_blank">⭐ View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-number">98.32%</div>
+    <div class="stat-label">Model Accuracy</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">87,000+</div>
+    <div class="stat-label">Training Images</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">38</div>
+    <div class="stat-label">Disease Classes</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">3</div>
+    <div class="stat-label">AI Features</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-inner">
+    <div class="section-tag">Features</div>
+    <h2>Everything a farmer needs</h2>
+    <p class="section-sub" style="margin:0 auto;">Three powerful AI tools in one platform — built for real-world agricultural use.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌿</div>
+        <h3>Crop Disease Detection</h3>
+        <p>Upload a photo of any leaf and our MobileNetV2 CNN model will instantly identify the disease, its cause, and the treatment steps.</p>
+        <span class="feature-tag">Computer Vision · CNN · TensorFlow</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Soil & Fertilizer Advisor</h3>
+        <p>Enter your soil's NPK values, pH, temperature and rainfall. Our Random Forest model recommends the best crop and fertilizer — including organic alternatives.</p>
+        <span class="feature-tag">Machine Learning · Random Forest</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌦️</div>
+        <h3>Smart Crop Planner</h3>
+        <p>Tell us your city and season. We fetch live weather data and suggest which crops to grow, when to sow them, and how often to water.</p>
+        <span class="feature-tag">Weather API · Logic Engine</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how">
+    <div class="section-tag">How it works</div>
+    <h2>Simple as taking a photo</h2>
+    <p class="section-sub" style="margin:0 auto;">Disease detection in 4 easy steps</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Take a photo</h4>
+        <p>Photograph the infected leaf clearly in good lighting</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Upload it</h4>
+        <p>Upload to SasyaAI via any browser on phone or laptop</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>AI analyses</h4>
+        <p>MobileNetV2 CNN processes and classifies the image in milliseconds</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Get results</h4>
+        <p>See the disease, cause, confidence score, and treatment steps</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech" id="tech">
+  <div class="tech-inner">
+    <div class="section-tag">Tech Stack</div>
+    <h2>Built with industry-standard tools</h2>
+    <p class="section-sub" style="margin:0 auto;">Every tool used in SasyaAI is production-grade and widely used in the industry.</p>
+    <div class="tech-grid">
+      <div class="tech-badge">🐍 Python 3.10</div>
+      <div class="tech-badge">🧠 TensorFlow 2.15</div>
+      <div class="tech-badge">📱 MobileNetV2</div>
+      <div class="tech-badge">🌲 Scikit-learn</div>
+      <div class="tech-badge">🖥️ Streamlit</div>
+      <div class="tech-badge">🌤️ OpenWeatherMap API</div>
+      <div class="tech-badge">📊 Pandas & NumPy</div>
+      <div class="tech-badge">🖼️ PIL / Pillow</div>
+      <div class="tech-badge">☁️ Streamlit Cloud</div>
+      <div class="tech-badge">🐙 GitHub</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="section-tag" style="background:rgba(255,255,255,0.15);color:white;">Try it now</div>
+  <h2>See SasyaAI in action</h2>
+  <p>Open the live app and upload any leaf photo. It takes less than 5 seconds to get a diagnosis.</p>
+  <div class="cta-buttons">
+    <a href="https://YOUR_USERNAME-sasyaai.streamlit.app" class="btn-primary" target="_blank">🚀 Launch App</a>
+    <a href="https://github.com/YOUR_USERNAME/sasyaai" class="btn-secondary" target="_blank">📂 View Source Code</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built with 🌿 by <strong style="color:white">Your Name</strong> &nbsp;|&nbsp;
+  <a href="https://github.com/YOUR_USERNAME/sasyaai">GitHub</a> &nbsp;|&nbsp;
+  <a href="https://YOUR_USERNAME-sasyaai.streamlit.app">Live Demo</a>
+  </p>
+  <p style="margin-top:8px">SasyaAI — Open Source AgriTech AI Platform</p>
+</footer>
+
+</body>
+</html>
